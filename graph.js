@@ -3,7 +3,7 @@
  * type name = string
  * type graph = name -> {net : int,
  *                       neighbors : name -> {net : int,
- *                                            transaction : (int * string) array}}
+ *                                            transactions : (int * string) array}}
  */
 
 /*
