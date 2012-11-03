@@ -1,9 +1,9 @@
 /* All of the functions in this file operate on a graph. The type of graph is 
  * expected to be as follows:
  * type name = string
- * type graph name -> {net : int,
- *                     neighbors : name -> {net : int,
- *                                          transaction : (int * string) array}}
+ * type graph = name -> {net : int,
+ *                       neighbors : name -> {net : int,
+ *                                            transactions : (int * string) array}}
  */
 
 /*
