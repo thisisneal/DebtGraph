@@ -39,12 +39,9 @@
 
         <a href="/auth/facebook">Login with Facebook</a>
         
-        <label>Username: </label><input type="text" class="input-small search query" id="user" value="Neal"/><br/>
+        <label>Set Username: </label><input type="text" class="input-small search query" id="user" value="Neal"/><br/>
 
-        --------------<br>
-
-    <a data-toggle="modal" href="#myModal" class="btn btn-primary btn-medium">Add Transaction</a>
-
+        <a data-toggle="modal" href="#myModal" class="btn btn-primary btn-medium">Add Transaction</a>
 
         <div id="myModal" class="modal hide fade" style="display: none; ">
             <div class="modal-header">
@@ -52,8 +49,7 @@
               <h3>Add Transaction</h3>
             </div>
             <div class="modal-body">
-            <form id="modal-form">
-                <label>MY NAME</label><input type="text" class="input-small search query" id="lender" value="Neal"/>
+            <form id="modal-form" style="display: inline; margin: 0;">
 				<label>I owe </label><input type="text" class="input-small search query" id="borrower" value="Friend"/>
 				<label></label><input type="text" class="input-small search query" id="amount" value="Amount ($)"/>
 				<label> for </label><input type="text" id="description" value="reason"/>
@@ -66,24 +62,21 @@
             </form>
             </div>
         </div>​
-<!--        <label>Friend: </label><input type="text" class="input-small search query" id="lender" value="Neal"/><br/>
-        <label>Borrower: </label><input type="text" class="input-small search query" id="borrower" value="Borrower 1"/><br/>
-        <label>Amount ($): </label><input type="text" class="input-small search query" id="amount" value="100"/><br/>
-        <label>Description: </label><input type="text" id="description" value="chipotle"/>
-        <br><br>
-        <button id="submit_trans">Submit</button>-->
-    </div>
 
-    <div id="status"> </div>
+        <div id="status"> </div>
 
-    <div class="display">
-    <table class="table table-striped" id="trans">
-        <tr>
-          <td>Friend</td>
-          <td>Amount</td>
-        </tr>
-    </table>
+        <br/>
+        <br/>
+        <br/>
 
+        <div class="display">
+            <table class="table table-striped" id="trans">
+                <tr>
+                  <td>Friend</td>
+                  <td>Amount</td>
+                </tr>
+            </table>
+        </div>
     
     <!-- Need to load this last to instantiate 
         callback for button -->

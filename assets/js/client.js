@@ -9,7 +9,7 @@ $('#modal-form').on('submit', function(){
         dataType: "json",
         async: true,
         url: '/addTransPost',
-        data: {lender:$("#lender").val(),
+        data: {lender:$("#user").val(),
                borrower:$("#borrower").val(),
                amount:$("#amount").val(),
                description:$("#description").val()},
