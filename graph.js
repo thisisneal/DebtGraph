@@ -1,3 +1,15 @@
+/* All of the functions in this file operate on a graph. The type of graph is 
+ * expected to be as follows:
+ * type name = string
+ * type graph name -> {net : int,
+ *                     neighbors : name -> {net : int,
+ *                                          transaction : (int * string) array}}
+ */
+
+/*
+ * Add a directed edge to the graph.
+ * Call this twice to properly add a transaction.
+ */
 function addTransactionHalf(graph, from, to, amount, description) {
     if (graph[from] == undefined) {
         graph[from] = {};
@@ -30,6 +42,10 @@ function addTransactionHalf(graph, from, to, amount, description) {
     }
 }
 
+/*
+ * Get the net debt of the person name. Returns a negative value if the person
+ * is owed money.
+ */
 function getNet(graph, name) {
     if (graph[name] == undefined) {
         return 0;
@@ -38,6 +54,10 @@ function getNet(graph, name) {
     }
 }
 
+/*
+ * Get the net debt from owes to. Returns a negative value if to owes from more
+ * money than from owes to.
+ */
 function getNetBetween(graph, from, to) {
     if (graph[from] == undefined || graph[from]["neighbors"][to] == undefined) {
         return 0;
@@ -46,6 +66,10 @@ function getNetBetween(graph, from, to) {
     }
 }
 
+/*
+ * Returns the neighbors of name in graph, complete with information about debt
+ * and transaction between them.
+ */
 function getNeighbors(graph, name) {
     if (graph[name] == undefined) {
         return {};
@@ -54,6 +78,9 @@ function getNeighbors(graph, name) {
     }
 }
 
+/*
+ * Returns the transaction history between from and to.
+ */
 function getTransactions(graph, from, to) {
     if (graph[from] == undefined || graph[from]["neighbors"][to] == undefined) {
         return [];
@@ -62,30 +89,62 @@ function getTransactions(graph, from, to) {
     }
 }
 
-function findPaths(graph, left, right, maxSize) {
+/*
+ * Finds the heaviest path from left to right, where heaviest is defined as
+ * length multiplied by minimum weight across the edges in the path and
+ * maxWeight. Call this before adding a new transaction in order to find any
+ * cycles that adding the transaction would create. Returns "none" if no cycles
+ * are found.
+ */
+function bestPath(graph, left, right, maxWeight) {
     var visited = {};
     var paths = [];
 
-    var frontier = newNeighbors(left); // maybe make next a priority queue
+    var frontier = [] // maybe make this a priority queue
+    for (neighbor in newNeighbors(left)) {
+        frontier.push({"name":neighbor, "path": [neighbor]});
+    }
 
     function newNeighbors(name) {
-        var neighbors = getNeighbors(name);
+        var neighbors = getNeighbors(graph, name);
         var result = []
-        for (var neigbor in neighbors) {
-            if (neighbor in visited) {
+        for (var neighbor in neighbors) {
+            if (neighbor in visited && neighbors[neighbor]["net"] > 0) {
                 result[result.length] = neighbor;
             }
         }
         return result;
     }
-    
+
+    // Breadth first search the graph to find all of the positive paths.
     while (frontier.length > 0) {
         // remove first element
         var current = frontier.shift()
-        if (current = right) {
-	    current_path
+        if (current["name"] == right) {
+            paths[paths.length] = current["path"];
+        }
+        visited[current["name"]] = true;
+        for (neighbor in newNeighbors) {
+            frontier.push({"name":neighbor,
+			   // this copying of path is slow
+                           "path": current["path"].slice().push(neighbor)});
+        }
     }
-	visited[current] = true;
-	next.append(newNeighbors)
+
+    if (paths.length == 0) {
+	return "none";
+    }
+
+    // Pick the best path.
+    var bestPath = paths[0];
+    var bestWeight = pathWeight(bestPath, maxWeight);
+    for (var i = 1; i < paths.length; i++) {
+	var currentWeight = pathWeight(paths[i], maxWeight);
+	if (currentWeight > bestWeight ||
+	    (currentWeight == bestWeight &&
+	     path[1].length < bestPath.length)) {
+	    bestWeight = currentWeight;
+	    bestPath = paths[i];
+	}
     }
 }
