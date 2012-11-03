@@ -156,7 +156,14 @@ function checkCycle(lender, borrower) {
     var cyclePath = bestCycle(dg, lender, borrower);
 
     if (cyclePath != "none") {
-        //?
+        var amount = cyclePath.amount
+        // fix to be more user friendly ???
+        var desc = "Cycle resolution"
+        updateGraph(lender, cyclePath.path[0], amount, desc);
+        for (var i = 1; i < cyclePath.path.length; i++) {
+            updateGraph(cyclePath.path[i - 1], cyclePath.path[i], amount, desc);
+        }
+        updateGraph(borrower, lender, amount, desc);
     }
 
     console.log(cyclePath);
