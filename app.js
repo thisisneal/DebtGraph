@@ -121,6 +121,7 @@ console.log('Express server started on port ' + tcpport.toString() +
                 '/ with your web browser.');
 
 function addTransaction(req, res) {
+    console.log(req.body);
     var myError, myStatus;
 
     var lender = req.body.lender;

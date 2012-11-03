@@ -1,6 +1,8 @@
 console.log("client.js loaded");
 
-$("#submit_trans").click(function() {
+var myUniqueId = 0;
+
+$('#modal-form').on('submit', function(){
     $.ajax({
         type: 'POST',
         dataType: "json",
@@ -13,6 +15,7 @@ $("#submit_trans").click(function() {
         
         // callback handler that will be called on success
         success: function(response, textStatus, jqXHR) {
+            $('#myModal').modal('hide');
             if(response.status == 1) {
                 requestTransDict();
                 document.getElementById("status").innerHTML =
@@ -26,10 +29,11 @@ $("#submit_trans").click(function() {
             // log the error to the console
             console.log(
                 "The following error occured: " +
-                    textStatus, errorThrown
+                    textStatus, errorThrown, jqXHR.status
             );
         }
     });
+    return false;
 });
 
 function requestTransDict() {
