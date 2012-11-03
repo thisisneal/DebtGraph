@@ -50,10 +50,10 @@ function addTransaction(req, res) {
         myError = "";
         myStatus = 1;
 
-	var cyclePath = bestPath(dg, borrower, lender, parseFloat(amount));
-	if (cyclePath != "none") {
-	    // ???
-	}
+        var cyclePath = bestPath(dg, borrower, lender, parseFloat(amount));
+        if (cyclePath != "none") {
+            // ???
+        }
 
         console.log(cyclePath);
 

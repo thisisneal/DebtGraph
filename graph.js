@@ -126,25 +126,25 @@ function bestPath(graph, left, right, maxWeight) {
         visited[current["name"]] = true;
         for (neighbor in newNeighbors) {
             frontier.push({"name":neighbor,
-			   // this copying of path is slow
+               // this copying of path is slow
                            "path": current["path"].slice().push(neighbor)});
         }
     }
 
     if (paths.length == 0) {
-	return "none";
+        return "none";
     }
 
     // Pick the best path.
     var bestPath = paths[0];
     var bestWeight = pathWeight(bestPath, maxWeight);
     for (var i = 1; i < paths.length; i++) {
-	var currentWeight = pathWeight(paths[i], maxWeight);
-	if (currentWeight > bestWeight ||
-	    (currentWeight == bestWeight &&
-	     path[1].length < bestPath.length)) {
-	    bestWeight = currentWeight;
-	    bestPath = paths[i];
-	}
+        var currentWeight = pathWeight(paths[i], maxWeight);
+        if (currentWeight > bestWeight ||
+            (currentWeight == bestWeight &&
+             path[1].length < bestPath.length)) {
+            bestWeight = currentWeight;
+            bestPath = paths[i];
+        }
     }
 }
