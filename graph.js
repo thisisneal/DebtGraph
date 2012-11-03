@@ -96,7 +96,10 @@ function getTransactions(graph, from, to) {
  * cycles that adding the transaction would create. Returns "none" if no cycles
  * are found.
  */
-function bestPath(graph, left, right, maxWeight) {
+function bestCycle(graph, left, right) {
+    // 
+    maxWeight = getNetBetween(graph, right, left);
+
     var visited = {};
     var paths = [];
 
