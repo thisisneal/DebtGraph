@@ -15,6 +15,11 @@ $("#submit_trans").click(function() {
 		    success: function(response, textStatus, jqXHR) {
 		    if(response.status == 1) {
 			var myTrans = requestTransDict();
+
+			for (var i in myTrans.neighbors) {
+			    
+			}
+
 			// render html with myTrans here!!!!11x
 			var table = document.getElementById("trans");
 			var rowCount = table.rows.length;
@@ -30,9 +35,6 @@ $("#submit_trans").click(function() {
 
 			var cell3 = row.insertCell(2);
 			cell3.innerHTML = $("#amount").val();
-
-			var cell4 = row.insertCell(3);
-			cell4.innerHTML = $("#description").val();
 
 			document.getElementById("status").innerHTML =
 			    "Added transaction.";
