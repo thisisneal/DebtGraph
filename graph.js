@@ -157,7 +157,7 @@ function bestCycle(graph, left, right) {
 
     // Pick the best path.
     var bestPath = paths[0];
-    var bestWeight = pathWeight(graph, bestPath, maxWeight);
+    var bestWeight = pathWeight(graph, left, right, bestPath);
     for (var i = 1; i < paths.length; i++) {
         var currentWeight = pathWeight(graph, left, right, paths[i]);
         if (currentWeight > bestWeight ||
