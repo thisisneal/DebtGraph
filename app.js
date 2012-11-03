@@ -48,32 +48,34 @@ passport.serializeUser(function(user, done) {
 passport.deserializeUser(function(id, done) {
   findById(id, function (err, user) {
     done(err, user);
-  });
+});
 });
 
 // Facebook connect stuff with passport
-passport.use(new FacebookStrategy({
-    clientID: FACEBOOK_APP_ID,
-    clientSecret: FACEBOOK_APP_SECRET,
-    callbackURL: "http://localhost:8888/auth/facebook/callback",
-  },
-  function(accessToken, refreshToken, profile, done) {
-    console.log(profile);
-      // var user = users[profile.id] || 
-      //            (users[profile.id] = { id: profile.id, name: profile.username });
-      // done(null, user.id);
-      // Find the user by username.  If there is no user with the given
-      // username, or the password is not correct, set the user to `false` to
-      // indicate failure and set a flash message.  Otherwise, return the
-      // authenticated `user`.
-      findByUsername(profile.id, function(err, user) {
-        if (err) { return done(err); }
-        if (!user) { return done(null, false, { message: 'Unknown user ' + profile.id }); }
-        if (user.password != password) { return done(null, false, { message: 'Invalid password' }); }
-        return done(null, user);
-      })
-  }
-));
+passport.use(
+    new FacebookStrategy({
+        clientID: FACEBOOK_APP_ID,
+        clientSecret: FACEBOOK_APP_SECRET,
+        callbackURL: "http://localhost:8888/auth/facebook/callback",
+    },
+    function(accessToken, refreshToken, profile, done) {
+        console.log(profile);
+
+        // Find the user by username.  If there is no user with the given
+        // username, or the password is not correct, set the user to `false` to
+        // indicate failure and set a flash message.  Otherwise, return the
+        // authenticated `user`.
+        findByUsername(profile.username, function(err, user) {
+            if (err) { 
+                return done(err); 
+            }
+            if (!user) { 
+                users[users.length] = profile;
+            }
+            return done(null, user);
+        })
+      }
+  ));
 // End facebook connect section
 
 // Redirect the user to Facebook for authentication.  When complete,
