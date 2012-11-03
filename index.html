@@ -30,26 +30,6 @@
 
 <body>
 
-
-    <a data-toggle="modal" href="#myModal" class="btn btn-primary btn-large">Launch demo modal</a>
-
-
-        <div id="myModal" class="modal hide fade" style="display: none; ">
-            <div class="modal-header">
-              <button class="close" data-dismiss="modal">×</button>
-              <h3>Modal Heading</h3>
-            </div>
-            <div class="modal-body">
-              <p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.</p>
-            </div>
-            <div class="modal-footer">
-              <a href="#" class="btn" data-dismiss="modal">Close</a>
-              <a href="#" class="btn btn-primary">Save changes</a>
-            </div>
-        </div>​
-
-
-
     <div class="container">
         <div class="page-header span12 pagination-centered">
             <h3>
@@ -61,14 +41,34 @@
         
         <label>Username: </label><input type="text" class="input-small search query" id="user" value="Neal"/><br/>
 
-        ----x-x--x-x-x-xx-----
+        ----x-x--x-x-x-xx-----<br>
 
-        <label>Friend: </label><input type="text" class="input-small search query" id="lender" value="Neal"/><br/>
+    <a data-toggle="modal" href="#myModal" class="btn btn-primary btn-medium">Add Transaction</a>
+
+
+        <div id="myModal" class="modal hide fade" style="display: none; ">
+            <div class="modal-header">
+              <button class="close" data-dismiss="modal">×</button>
+              <h3>I Owe Someone</h3>
+            </div>
+            <div class="modal-body">
+				<label>I owe </label><input type="text" class="input-small search query" id="lender" value="Friend"/>
+				<label></label><input type="text" class="input-small search query" id="amount" value="Amount ($)"/>
+				<label> for </label><input type="text" id="description" value="reason"/>
+				<br><br>
+				<button id="reverse">Reverse</button>
+            </div>
+            <div class="modal-footer">
+              <a href="#" class="btn" data-dismiss="modal">Close</a>
+              <button class="btn btn-primary" id="sumbit_trans">Submit</button>
+            </div>
+        </div>​
+<!--        <label>Friend: </label><input type="text" class="input-small search query" id="lender" value="Neal"/><br/>
         <label>Borrower: </label><input type="text" class="input-small search query" id="borrower" value="Borrower 1"/><br/>
         <label>Amount ($): </label><input type="text" class="input-small search query" id="amount" value="5050"/><br/>
         <label>Description: </label><input type="text" id="description" value="chipotle"/>
         <br><br>
-        <button id="submit_trans">Submit</button>
+        <button id="submit_trans">Submit</button>-->
     </div>
 
     <div id="status"> </div>
