@@ -7,8 +7,15 @@ var express = require('express'),
 if (process.argv.length <= 2) tcpport = 8888;
 else tcpport = process.argv[2]; //port of the HTTP server
 
+var dg = {};
+
 app.get('/', function(req, res){
     indexer = fs.readFileSync('index.html').toString()
+    res.send(indexer);
+});
+
+app.get('/client.js', function(req, res){
+	indexer = fs.readFileSync('client.js').toString()
     res.send(indexer);
 });
 
@@ -29,7 +36,19 @@ console.log('Express server started on port ' + tcpport.toString() +
                 '\nGo to http://localhost:'+ tcpport.toString() + 
                 '/ with your web browser.');
 
-var dg = {};
+function addTransaction(req, res) {
+    console.log("Add Transaction");
+
+    var lender = req.body.lender;
+    var borrower = req.body.borrower;
+    var amount = req.body.amount;
+    var description = req.body.description;
+
+    addTransactionHalf(borrower, lender, amount, description);
+    addTransactionHalf(lender, borrower, -amount, description);
+
+    res.send({status:1});
+}
 
 function addTransactionHalf(from, to, amount, description) {
     if (dg[from] == undefined) {
@@ -61,18 +80,6 @@ function addTransactionHalf(from, to, amount, description) {
             "description":description
         };
     }
-}
-
-function addTransaction(req, res) {
-    var lender = req.body.lender;
-    var borrower = req.body.borrower;
-    var amount = req.body.amount;
-    var description = req.body.description;
-
-    addTransactionHalf(borrower, lender, amount, description);
-    addTransactionHalf(lender, borrower, -amount, description);
-
-    res.send("Ok. Added Transaction");
 }
 
 function getNet(name) {

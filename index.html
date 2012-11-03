@@ -1,16 +1,22 @@
 <html>
 <head>
+    <script language="javascript" type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    
     <title>Debt Graph</title>
 </head>
 
 <body>
-    <form name="input" action="addTransPost" method="post">
-    Lender: <input type="text" name="lender"><br/>
-    Borrower: <input type="text" name="borrower"><br/>
-    Amount ($): <input type="text" name="amount"><br/>
-    Description: <input type="text" name="description"><br/>
-    <input type="submit" value="Submit">
-    </form>
+    Lender: <input type="text" id="lender" /><br/>
+    Borrower: <input type="text" id="borrower" /><br/>
+    Amount ($): <input type="text" id="amount" /><br/>
+    Description: <input type="text" id="description" /><br/>
+    <button id="submit_trans">Submit</button>
+    <span id="status"></span>
+
+
+    <!-- Need to load this last to instantiate 
+        callback for button -->
+    <script language="javascript" type="text/javascript" src="client.js"></script>
 </body>
 
 </html>
