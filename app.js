@@ -50,9 +50,16 @@ function addTransaction(req, res) {
         myError = "";
         myStatus = 1;
 
-        addTransactionHalf(dg, borrower, lender, 
+	var cyclePath = bestPath(dg, );
+	if (cyclePath != "none") {
+	    // ???
+	}
+
+        console.log(cyclePath);
+
+        addTransactionHalf(dg, borrower, lender,
                            parseFloat(amount), description);
-        addTransactionHalf(dg, lender, borrower, 
+        addTransactionHalf(dg, lender, borrower,
                            parseFloat(-amount), description);
     } else {
         myError = "Amount is not a positive number.";
