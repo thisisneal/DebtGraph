@@ -1,11 +1,6 @@
 console.log("client.js loaded");
 
-console.log($);
-
-$("#status").html("JQuery working");
-
 $("#submit_trans").click(function() {
-    console.log("Asdf");
     $.ajax({
         type: 'POST',
         dataType: "json",
@@ -15,9 +10,19 @@ $("#submit_trans").click(function() {
                borrower:$("#borrower").val(),
                amount:$("#amount").val(),
                description:$("#description").val()},
-        success: function(res){
-            console.log(res);
-            $("#status").html("OK, Added Transaction").fadeIn('fast')
+        // callback handler that will be called on success
+        success: function(response, textStatus, jqXHR) {
+            if(response.status == 1)
+                $("#status").html("OK, Added Transaction")
+                            .fadeIn('slow');
+        },
+        // callback handler that will be called on error
+        error: function(jqXHR, textStatus, errorThrown) {
+            // log the error to the console
+            console.log(
+                "The following error occured: " +
+                textStatus, errorThrown
+            );
         }
     });
 });

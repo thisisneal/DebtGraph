@@ -37,6 +37,8 @@ console.log('Express server started on port ' + tcpport.toString() +
                 '/ with your web browser.');
 
 function addTransaction(req, res) {
+    console.log("Add Transaction");
+
     var lender = req.body.lender;
     var borrower = req.body.borrower;
     var amount = req.body.amount;
@@ -45,7 +47,7 @@ function addTransaction(req, res) {
     addTransactionHalf(borrower, lender, amount, description);
     addTransactionHalf(lender, borrower, -amount, description);
 
-    res.send("Ok. Added Transaction");
+    res.send({status:1});
 }
 
 function addTransactionHalf(from, to, amount, description) {
