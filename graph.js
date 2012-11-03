@@ -139,7 +139,7 @@ function bestCycle(graph, left, right) {
         return "none";
     }
 
-    function pathWeight(graph, path, maxWeight) {
+    function pathWeight(graph, left, right, path) {
         /* The weight in a path is the minimum weight in the path,
          * because we cannot resolve more debt than the smallest. */
         var min = getNetBetween(graph, right, left);
@@ -159,7 +159,7 @@ function bestCycle(graph, left, right) {
     var bestPath = paths[0];
     var bestWeight = pathWeight(graph, bestPath, maxWeight);
     for (var i = 1; i < paths.length; i++) {
-        var currentWeight = pathWeight(graph, paths[i], maxWeight);
+        var currentWeight = pathWeight(graph, left, right, paths[i]);
         if (currentWeight > bestWeight ||
             (currentWeight === bestWeight &&
              path[1].length < bestPath.length)) {
