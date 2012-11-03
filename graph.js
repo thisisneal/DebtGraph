@@ -97,9 +97,6 @@ function getTransactions(graph, from, to) {
  * are found.
  */
 function bestCycle(graph, left, right) {
-    // 
-    maxWeight = getNetBetween(graph, right, left);
-
     var visited = {};
     var paths = [];
 
@@ -143,15 +140,17 @@ function bestCycle(graph, left, right) {
     }
 
     function pathWeight(graph, path, maxWeight) {
-        var min = getNetBetween(graph, left, path[0]);
-	if (maxWeight < min) {
-	    min = maxWeight;
-	}
+        /* The weight in a path is the minimum weight in the path,
+         * because we cannot resolve more debt than the smallest. */
+        var min = getNetBetween(graph, right, left);
+        if (getNetBetween(graph, left, path[0]) < min) {
+            min = getNetBetween(graph, left, path[0]);
+        }
         for (var i = 1; i < path.length; i++) {
-	    var current = getNetBetween(graph, path[i - 1], path[i]);
-	    if (current < min) {
-		min = current;
-	    }
+            var current = getNetBetween(graph, path[i - 1], path[i]);
+            if (current < min) {
+                min = current;
+            }
         }
         return path.length * min;
     }
