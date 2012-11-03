@@ -39,17 +39,31 @@ console.log('Express server started on port ' + tcpport.toString() +
                 '/ with your web browser.');
 
 function addTransaction(req, res) {
-    console.log("Add Transaction");
+    console.log("Attempt to Add Transaction");
+    var myError, myStatus;
 
     var lender = req.body.lender;
     var borrower = req.body.borrower;
     var amount = req.body.amount;
     var description = req.body.description;
 
-    addTransactionHalf(dg, borrower, lender, amount, description);
-    addTransactionHalf(dg, lender, borrower, -amount, description);
+    if(isNumber(amount) && amount >= 0) {
+        myError = "";
+        myStatus = 1;
 
-    res.send({status:1});
+        addTransactionHalf(dg, borrower, lender, amount, description);
+        addTransactionHalf(dg, lender, borrower, -amount, description);
+    } else {
+        myError = "Amount is not a positive number.";
+        myStatus = 0;
+    }
+
+    res.send({status:myStatus, error:myError});
+}
+
+// Thank you "CMS" on Stack Overflow 
+function isNumber(n) {
+    return !isNaN(parseFloat(n)) && isFinite(n);
 }
 
 function serveTrans(req, res) {

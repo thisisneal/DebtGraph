@@ -16,6 +16,8 @@ $("#submit_trans").click(function() {
                 var myTrans = requestTransDict();
                 // render html with myTrans here!!!!11x
                 $("#status").html("OK, Added Transaction");
+            } else {
+                $("#status").html(response.error);
             }
         },
         // callback handler that will be called on error
