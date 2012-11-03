@@ -4,7 +4,9 @@
   "version": "0.0.1",
   "authors": "Neal Bhasin, Siddharth Dhulipalla, Elena Karras, William Arthur Duff, Eddie Nolan",
   "dependencies": {
-    "express": "3.0.1"
+    "express": "3.0.1",
+    "passport": "0.1.12",
+    "passport-facebook": "0.1.4"
   },
   "engine": "node >= 0.8.1"
 }
