@@ -34,7 +34,7 @@ $("#submit_trans").click(function() {
 			var cell4 = row.insertCell(3);
 			cell4.innerHTML = $("#description").val();
 
-			document.getElementById(status).innerHTML("OK, Added Transaction");
+			document.getElementById("status").innerHTML("OK, Added Transaction");
 		    } else {
 			$("#status").html(response.error);
 		    }
