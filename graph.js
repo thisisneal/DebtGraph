@@ -101,18 +101,15 @@ function bestPath(graph, left, right, maxWeight) {
     var paths = [];
 
     var frontier = [] // maybe make this a priority queue
-    for (neighbor in newNeighbors(left)) {
-        frontier.push({"name":neighbor, "path": [neighbor]});
+    var next = newNeighbors(left);
+    for (var i = 0; i < next.length; i++) {
+        frontier.push({"name":next[i], "path": [next[i]]});
     }
 
     function newNeighbors(name) {
-        console.log("\n In newNeighbors: " + name);
-
         var neighbors = getNeighbors(graph, name);
         var result = []
         for (var neighbor in neighbors) {
-            console.log("current neighbor: ");
-            console.log(neighbor);
             if (!(neighbor in visited) && neighbors[neighbor]["net"] > 0) {
                 result[result.length] = neighbor;
             }
@@ -122,35 +119,51 @@ function bestPath(graph, left, right, maxWeight) {
 
     // Breadth first search the graph to find all of the positive paths.
     while (frontier.length > 0) {
-        console.log("\n Frontier: ");
-        console.log(frontier);
         // remove first element
         var current = frontier.shift()
-        if (current["name"] == right) {
+        if (current["name"] === right) {
             paths[paths.length] = current["path"];
         }
         visited[current["name"]] = true;
-        for (neighbor in newNeighbors) {
-            frontier.push({"name":neighbor,
-               // this copying of path is slow
-                           "path": current["path"].slice().push(neighbor)});
+        var next = newNeighbors(current["name"]);
+        for (var i = 0; i < next.length; i++) {
+            var newPath = current["path"].slice()
+            newPath.push(next[i]);
+            frontier.push({"name":next[i],
+                           // this copying of path is slow
+                           "path":newPath});
         }
     }
 
-    if (paths.length == 0) {
+    if (paths.length === 0) {
         return "none";
+    }
+
+    function pathWeight(graph, path, maxWeight) {
+        var min = getNetBetween(graph, left, path[0]);
+	if (maxWeight < min) {
+	    min = maxWeight;
+	}
+        for (var i = 1; i < path.length; i++) {
+	    var current = getNetBetween(graph, path[i - 1], path[i]);
+	    if (current < min) {
+		min = current;
+	    }
+        }
+        return path.length * min;
     }
 
     // Pick the best path.
     var bestPath = paths[0];
-    var bestWeight = pathWeight(bestPath, maxWeight);
+    var bestWeight = pathWeight(graph, bestPath, maxWeight);
     for (var i = 1; i < paths.length; i++) {
-        var currentWeight = pathWeight(paths[i], maxWeight);
+        var currentWeight = pathWeight(graph, paths[i], maxWeight);
         if (currentWeight > bestWeight ||
-            (currentWeight == bestWeight &&
+            (currentWeight === bestWeight &&
              path[1].length < bestPath.length)) {
             bestWeight = currentWeight;
             bestPath = paths[i];
         }
     }
+    return {"path":bestPath, "amount":bestWeight / bestPath.length};
 }

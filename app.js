@@ -131,7 +131,7 @@ function addTransaction(req, res) {
         myError = "";
         myStatus = 1;
 
-        var cyclePath = bestPath(dg, borrower, lender, parseFloat(amount));
+        var cyclePath = bestPath(dg, lender, borrower, parseFloat(amount));
         if (cyclePath != "none") {
             // ???
         }
