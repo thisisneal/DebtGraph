@@ -20,10 +20,9 @@ app.use("/assets", express.static(__dirname + '/assets'));
 
 //Accept post request
 app.post('/addTransPost', addTransaction, function(req, res) {
-    //console.log(req.body)
-    //res.send(req.body);
 });
 
+//Handle a user's request for their transaction information
 app.post('/requestTransDict', serveTrans, function(req, res) {
 });
 
@@ -51,8 +50,17 @@ function addTransaction(req, res) {
         myError = "";
         myStatus = 1;
 
-        addTransactionHalf(dg, borrower, lender, amount, description);
-        addTransactionHalf(dg, lender, borrower, -amount, description);
+        var cyclePath = bestPath(dg, borrower, lender, parseFloat(amount));
+        if (cyclePath != "none") {
+            // ???
+        }
+
+        console.log(cyclePath);
+
+        addTransactionHalf(dg, borrower, lender,
+                           parseFloat(amount), description);
+        addTransactionHalf(dg, lender, borrower,
+                           parseFloat(-amount), description);
     } else {
         myError = "Amount is not a positive number.";
         myStatus = 0;

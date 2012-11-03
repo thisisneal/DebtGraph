@@ -106,10 +106,14 @@ function bestPath(graph, left, right, maxWeight) {
     }
 
     function newNeighbors(name) {
+        console.log("\n In newNeighbors: " + name);
+
         var neighbors = getNeighbors(graph, name);
         var result = []
         for (var neighbor in neighbors) {
-            if (neighbor in visited && neighbors[neighbor]["net"] > 0) {
+            console.log("current neighbor: ");
+            console.log(neighbor);
+            if (!(neighbor in visited) && neighbors[neighbor]["net"] > 0) {
                 result[result.length] = neighbor;
             }
         }
@@ -118,6 +122,8 @@ function bestPath(graph, left, right, maxWeight) {
 
     // Breadth first search the graph to find all of the positive paths.
     while (frontier.length > 0) {
+        console.log("\n Frontier: ");
+        console.log(frontier);
         // remove first element
         var current = frontier.shift()
         if (current["name"] == right) {
@@ -126,25 +132,25 @@ function bestPath(graph, left, right, maxWeight) {
         visited[current["name"]] = true;
         for (neighbor in newNeighbors) {
             frontier.push({"name":neighbor,
-			   // this copying of path is slow
+               // this copying of path is slow
                            "path": current["path"].slice().push(neighbor)});
         }
     }
 
     if (paths.length == 0) {
-	return "none";
+        return "none";
     }
 
     // Pick the best path.
     var bestPath = paths[0];
     var bestWeight = pathWeight(bestPath, maxWeight);
     for (var i = 1; i < paths.length; i++) {
-	var currentWeight = pathWeight(paths[i], maxWeight);
-	if (currentWeight > bestWeight ||
-	    (currentWeight == bestWeight &&
-	     path[1].length < bestPath.length)) {
-	    bestWeight = currentWeight;
-	    bestPath = paths[i];
-	}
+        var currentWeight = pathWeight(paths[i], maxWeight);
+        if (currentWeight > bestWeight ||
+            (currentWeight == bestWeight &&
+             path[1].length < bestPath.length)) {
+            bestWeight = currentWeight;
+            bestPath = paths[i];
+        }
     }
 }
