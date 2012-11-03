@@ -24,6 +24,9 @@ app.post('/addTransPost', addTransaction, function(req, res) {
     //res.send(req.body);
 });
 
+app.post('/requestTransDict', serveTrans, function(req, res) {
+});
+
 try {
     app.listen(tcpport);
 } catch(err) {
@@ -47,4 +50,12 @@ function addTransaction(req, res) {
     addTransactionHalf(dg, lender, borrower, -amount, description);
 
     res.send({status:1});
+}
+
+function serveTrans(req, res) {
+    var user = req.body.user;
+    var netValue = getNet(dg, user);
+    var myNeighbors = getNeighbors(dg, user);
+
+    res.send({value:netValue, neighbors:myNeighbors});
 }

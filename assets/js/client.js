@@ -12,8 +12,11 @@ $("#submit_trans").click(function() {
                description:$("#description").val()},
         // callback handler that will be called on success
         success: function(response, textStatus, jqXHR) {
-            if(response.status == 1)
-                $("#status").html("OK, Added Transaction")
+            if(response.status == 1) {
+                var myTrans = requestTransDict();
+                // render html with myTrans here!!!!11x
+                $("#status").html("OK, Added Transaction");
+            }
         },
         // callback handler that will be called on error
         error: function(jqXHR, textStatus, errorThrown) {
@@ -25,3 +28,26 @@ $("#submit_trans").click(function() {
         }
     });
 });
+
+function requestTransDict() {
+    $.ajax({
+        type: 'POST',
+        dataType: "json",
+        async: true,
+        url: '/requestTransDict',
+        data: {user:$("#user").val()},
+        // callback handler that will be called on success
+        success: function(response, textStatus, jqXHR) {
+            console.log(response);
+            return response;
+        },
+        // callback handler that will be called on error
+        error: function(jqXHR, textStatus, errorThrown) {
+            // log the error to the console
+            console.log(
+                "The following error occured: " +
+                textStatus, errorThrown
+            );
+        }
+    });
+}
