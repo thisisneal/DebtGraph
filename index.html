@@ -33,7 +33,7 @@
     <div class="container">
         <div class="page-header span12 pagination-centered">
             <h3>
-                Debt Graph
+                <img src="assets/DGLogoDualToneVector.svg" width="200"></img>
             </h3>
         </div>
 
@@ -49,10 +49,11 @@
         <div id="myModal" class="modal hide fade" style="display: none; ">
             <div class="modal-header">
               <button class="close" data-dismiss="modal">×</button>
-              <h3>I Owe Someone</h3>
+              <h3>Add Transaction</h3>
             </div>
             <div class="modal-body">
-				<label>I owe </label><input type="text" class="input-small search query" id="lender" value="Friend"/>
+            <form id="modal-form">
+				<label>I owe </label><input type="text" class="input-small search query" id="borrower" value="Friend"/>
 				<label></label><input type="text" class="input-small search query" id="amount" value="Amount ($)"/>
 				<label> for </label><input type="text" id="description" value="reason"/>
 				<br><br>
@@ -60,7 +61,8 @@
             </div>
             <div class="modal-footer">
               <a href="#" class="btn" data-dismiss="modal">Close</a>
-              <button class="btn btn-primary" id="sumbit_trans">Submit</button>
+              <button class="btn btn-primary" id="sumbit_trans" data>Submit</button>
+            </form>
             </div>
         </div>​
 <!--        <label>Friend: </label><input type="text" class="input-small search query" id="lender" value="Neal"/><br/>
