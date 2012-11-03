@@ -14,30 +14,7 @@ $("#submit_trans").click(function() {
         // callback handler that will be called on success
         success: function(response, textStatus, jqXHR) {
             if(response.status == 1) {
-                var myTrans = requestTransDict();
-                console.log("myTrans");
-		console.log(myTrans);
-                for (neighbor in myTrans.neighbors) {
-                    
-                }
-                
-                // render html with myTrans here!!!!11x
-                var table = document.getElementById("trans");
-                
-                var rowCount = table.rows.length;
-                var row = table.insertRow(rowCount);
-                
-                // Lender
-                var cell1 = row.insertCell(0);
-                cell1.innerHTML = $("#lender").val();
-                
-                // Borrower
-                var cell2 = row.insertCell(1);
-                cell2.innerHTML = $("#borrower").val();
-                
-                var cell3 = row.insertCell(2);
-                cell3.innerHTML = $("#amount").val();
-                
+                requestTransDict();
                 document.getElementById("status").innerHTML =
                     "Added transaction.";
             } else {
@@ -64,7 +41,7 @@ function requestTransDict() {
         data: {user:$("#user").val()},
         // callback handler that will be called on success
         success: function(response, textStatus, jqXHR) {
-            console.log(response);
+            updateUI(response);
             return response;
         },
         // callback handler that will be called on error
@@ -76,4 +53,27 @@ function requestTransDict() {
             );
         }
     });
+}
+
+function updateUI(trans) {
+    var value = trans.value;
+    var neighbors = trans.neighbors;
+
+    // render html with myTrans here!!!!11x
+    var table = document.getElementById("trans");
+    table.innerHTML = "";
+    for(var curNeighbor in neighbors) {
+        console.log(neighbors[curNeighbor]);
+        
+        var rowCount = table.rows.length;
+        var row = table.insertRow(rowCount);
+        
+        // Friend
+        var cell1 = row.insertCell(0);
+        cell1.innerHTML = curNeighbor;
+        
+        // Amount
+        var cell2 = row.insertCell(1);
+        cell2.innerHTML = neighbors[curNeighbor].net;
+    }
 }
