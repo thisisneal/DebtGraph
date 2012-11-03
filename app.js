@@ -119,7 +119,6 @@ console.log('Express server started on port ' + tcpport.toString() +
                 '/ with your web browser.');
 
 function addTransaction(req, res) {
-    console.log("Attempt to Add Transaction");
     var myError, myStatus;
 
     var lender = req.body.lender;
@@ -127,27 +126,38 @@ function addTransaction(req, res) {
     var amount = req.body.amount;
     var description = req.body.description;
 
+    console.log("Attempt to Add Transaction from: " + lender);
+
     if(isNumber(amount) && amount >= 0) {
         myError = "";
         myStatus = 1;
 
-        var cyclePath = bestPath(dg, lender, borrower, parseFloat(amount));
-        if (cyclePath != "none") {
-            // ???
-        }
+        updateGraph(lender, borrower, amount, description);
 
-        console.log(cyclePath);
-
-        addTransactionHalf(dg, borrower, lender,
-                           parseFloat(amount), description);
-        addTransactionHalf(dg, lender, borrower,
-                           -parseFloat(amount), description);
+        checkCycle(lender, borrower);
     } else {
         myError = "Amount is not a positive number.";
         myStatus = 0;
     }
 
     res.send({status:myStatus, error:myError});
+}
+
+function updateGraph(lender, borrower, amount, description) {
+    addTransactionHalf(dg, borrower, lender,
+                       parseFloat(amount), description);
+    addTransactionHalf(dg, lender, borrower,
+                       -parseFloat(amount), description);
+}
+
+function checkCycle(lender, borrower) {
+    var cyclePath = bestCycle(dg, lender, borrower);
+
+    if (cyclePath != "none") {
+        //?
+    }
+
+    console.log(cyclePath);
 }
 
 // Thank you "CMS" on Stack Overflow 
