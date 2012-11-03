@@ -16,10 +16,7 @@ app.get('/', function(req, res){
     res.send(indexer);
 });
 
-app.get('/client.js', function(req, res){
-	indexer = fs.readFileSync('client.js').toString()
-    res.send(indexer);
-});
+app.use("/assets", express.static(__dirname + '/assets'));
 
 //Accept post request
 app.post('/addTransPost', addTransaction, function(req, res) {
