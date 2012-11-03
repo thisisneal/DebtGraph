@@ -1,6 +1,7 @@
 console.log("client.js loaded");
 
 var myUniqueId = 0;
+document.onload = requestTransDict();
 
 $('#modal-form').on('submit', function(){
     $.ajax({
